@@ -1,0 +1,65 @@
+name: Build extensions
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    if: github.event_name != 'release'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: python build.py
+      - run: python -m unittest discover -s tests -v
+      - uses: actions/upload-artifact@v4
+        with:
+          name: enter-newline-for-ai
+          path: dist/*.*
+
+  release:
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Extract version from release tag
+        id: version
+        shell: bash
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          if [[ ! "$TAG" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+            echo "Invalid release tag: expected v1.2.3" >&2
+            exit 1
+          fi
+          echo "value=${TAG#v}" >> "$GITHUB_OUTPUT"
+      - run: python -m unittest discover -s tests -v
+      - name: Build release packages
+        env:
+          VERSION: ${{ steps.version.outputs.value }}
+        run: python build.py --version "$VERSION"
+      - name: Attach packages to GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ github.event.release.tag_name }}
+          VERSION: ${{ steps.version.outputs.value }}
+        run: |
+          gh release upload "$TAG" \
+            "dist/enter-newline-for-ai-${VERSION}-firefox.xpi" \
+            "dist/enter-newline-for-ai-${VERSION}-chrome.zip" \
+            --clobber

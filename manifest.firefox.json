@@ -1,0 +1,115 @@
+{
+  "manifest_version": 3,
+  "name": "Enter Newline for AI",
+  "version": "1.0.0",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{1e6e72e3-28f5-4d6c-a852-082adffecc3b}",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    }
+  },
+  "permissions": [
+    "storage"
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://chatgpt.com/*",
+        "*://*.openai.com/*"
+      ],
+      "js": [
+        "common.js",
+        "ChatGPT.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://claude.ai/*",
+        "*://www.claude.ai/*",
+        "*://*.claude.ai/*"
+      ],
+      "js": [
+        "common.js",
+        "Claude.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://copilot.microsoft.com/*",
+        "*://www.bing.com/chat*"
+      ],
+      "js": [
+        "common.js",
+        "Copilot.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": [
+        "*://gemini.google.com/*",
+        "*://aistudio.google.com/*"
+      ],
+      "js": [
+        "common.js",
+        "Gemini.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": [
+        "*://grok.com/*",
+        "*://www.grok.com/*",
+        "*://*.grok.com/*"
+      ],
+      "js": [
+        "common.js",
+        "Grok.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://perplexity.ai/*",
+        "*://www.perplexity.ai/*",
+        "*://*.perplexity.ai/*"
+      ],
+      "js": [
+        "common.js",
+        "Perplexity.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://google.co.jp/*",
+        "*://www.google.co.jp/*",
+        "*://google.com/*",
+        "*://www.google.com/*"
+      ],
+      "js": [
+        "common.js",
+        "GoogleAI.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ]
+}
