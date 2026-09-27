@@ -18,6 +18,7 @@ class BuildTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         shutil.copy2(ROOT / "build.py", self.root)
         shutil.copytree(ROOT / "src", self.root / "src")
+        shutil.copytree(ROOT / "icon", self.root / "icon")
         self.originals = {}
         for target in ("firefox", "chrome"):
             name = f"manifest.{target}.json"
@@ -40,6 +41,10 @@ class BuildTests(unittest.TestCase):
             self.assertEqual(json.loads(archive.read("manifest.json")), expected)
             for source in (self.root / "src").iterdir():
                 self.assertEqual(archive.read(source.name), source.read_bytes())
+            for source in (self.root / "icon").iterdir():
+                self.assertEqual(
+                    archive.read(f"icon/{source.name}"), source.read_bytes()
+                )
         staged = self.root / "dist" / target / "manifest.json"
         self.assertEqual(json.loads(staged.read_text(encoding="utf-8")), expected)
         for name, original in self.originals.items():

@@ -28,6 +28,7 @@ def build(target, version=None):
     outdir.mkdir(parents=True)
     for p in SRC.iterdir():
         if p.is_file(): shutil.copy2(p, outdir / p.name)
+    shutil.copytree(ROOT / "icon", outdir / "icon")
     shutil.copy2(manifest_path, outdir / "manifest.json")
     # Only rewrite the staging copy; keep the source manifest untouched.
     manifest["version"] = version
@@ -39,8 +40,8 @@ def build(target, version=None):
     archive = DIST / f"enter-newline-for-ai-{version}-{target}.{suffix}"
     if archive.exists(): archive.unlink()
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as z:
-        for p in sorted(outdir.iterdir()):
-            if p.is_file(): z.write(p, p.name)
+        for p in sorted(outdir.rglob("*")):
+            if p.is_file(): z.write(p, p.relative_to(outdir))
     print(archive)
 
 if __name__ == "__main__":
