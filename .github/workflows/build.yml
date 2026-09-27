@@ -21,6 +21,7 @@ jobs:
           python-version: '3.x'
       - run: python build.py
       - run: python -m unittest discover -s tests -v
+      - run: node --test tests/*.test.js
       - uses: actions/upload-artifact@v4
         with:
           name: enter-newline-for-ai
@@ -48,6 +49,7 @@ jobs:
           fi
           echo "value=${TAG#v}" >> "$GITHUB_OUTPUT"
       - run: python -m unittest discover -s tests -v
+      - run: node --test tests/*.test.js
       - name: Build release packages
         env:
           VERSION: ${{ steps.version.outputs.value }}
