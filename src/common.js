@@ -161,6 +161,22 @@
             }
 
             if (!e.shiftKey && !e.altKey) {
+                if (config.newlineMode === "trustedEnterAsShiftEnter") {
+                    try {
+                        const eventForPage = e.wrappedJSObject ?? e;
+
+                        Object.defineProperty(eventForPage, "shiftKey", {
+                            configurable: true,
+                            get: () => true
+                        });
+
+                        return;
+                    } catch {
+                        stopEvent(e);
+                        return;
+                    }
+                }
+
                 stopEvent(e);
                 try { editor.focus(); } catch {}
                 insertNewline(editor);

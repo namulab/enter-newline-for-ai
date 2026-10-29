@@ -10,9 +10,10 @@ AIチャットのメイン入力欄で、`Enter` を送信ではなく改行と�
 - Grok
 - Claude
 - Gemini
-- Microsoft Copilot
 - Perplexity
 - Google AI Mode (`google.co.jp` / `google.com`)
+
+Microsoft Copilot は、入力エディターの仕様変更により安定した動作を維持できなくなったため、現在はサポート対象外です。
 
 ## 操作
 

@@ -42,19 +42,6 @@
     },
     {
       "matches": [
-        "*://copilot.microsoft.com/*",
-        "*://www.bing.com/chat*"
-      ],
-      "js": [
-        "common.js",
-        "Copilot.js"
-      ],
-      "run_at": "document_start",
-      "all_frames": true,
-      "match_about_blank": true
-    },
-    {
-      "matches": [
         "*://gemini.google.com/*",
         "*://aistudio.google.com/*"
       ],

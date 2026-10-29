@@ -10,9 +10,10 @@ A Firefox / Chrome browser extension that makes `Enter` insert a newline instead
 - Grok
 - Claude
 - Gemini
-- Microsoft Copilot
 - Perplexity
 - Google AI Mode (`google.co.jp` / `google.com`)
+
+Microsoft Copilot is no longer supported because changes to its input editor have made it difficult to maintain reliable behavior.
 
 ## Keyboard behavior
 
