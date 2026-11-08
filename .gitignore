@@ -1,3 +1,37 @@
 dist/
 __pycache__/
 *.pyc
+
+# Local coding-agent settings, approvals, credentials, and session data
+.codex*
+.claude*
+.cursor*
+.gemini*
+.specstory*
+.agents/
+
+# Environment files and their local/backup variants
+.env*
+*.env
+*.env.*
+
+# Cloud and command-line credentials, including backups
+.aws*
+.azure/
+.config/gcloud/
+.ssh/
+.npmrc
+.netrc
+.pypirc
+credentials
+credentials.*
+*credentials*.json
+*credentials*.csv
+
+# Private keys, certificates with private keys, and backups
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
